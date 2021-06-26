@@ -67,3 +67,80 @@ is.numeric(chr_var)
 is.atomic(dbl_var)
 ```
 
+When combining different type of vector into one vector, the type of the vector will be corerced into this order: character > double > integer > logical.
+```{r}
+typeof(c(lgl_var, dbl_var))
+typeof(c(lgl_var, chr_var))
+typeof(c(chr_var, int_var))
+```
+Coercing into integer will make the element that is character becomes NA
+```{r}
+mixed_var <- c(chr_var, int_var)
+typeof(mixed_var)
+as.integer(mixed_var)
+```
+## Attributes
+
+We can set name pair attributes for any variable. Attribute can be strings or numeric.
+```{r}
+a <- 1:3
+attr(a, "x") <- "abcdef"
+attr(a, "x")
+
+attr(a, "y") <- 4:6
+str(attributes(a))
+
+# Or equivalently:
+a <- structure(1:3, x = "abcdef", y = 4:6)
+str(attributes(a))
+```
+There are 2 attributes that is generally preserved. It is names (character vector giving each elements a name) and dim (short for dimension, used to turn vectors into matrices or arrays).
+
+## Names
+
+We have a few way to creates name
+```{r}
+# Create name at the beginning
+x <- c("a" = 1, "b" = 2, "c" = 3)
+x
+# Create a names vector
+y = 1:3
+names(y) = c("a", "b", "c")
+y
+
+# Inline with setNames()
+z <- setNames(1:3, c("a", "b", "c"))
+z
+```
+
+## Dimensions
+
+```{r}
+# setting matrix
+x <- matrix(1:6, nrow = 2, ncol = 3)
+x
+
+y <- array(1:12, c(2, 3, 2))
+y
+```
+
+We can also modify the dim to set the object
+```{r}
+z <- 1:6
+dim(z) <- c(2, 3)
+z
+```
+Vector, Matrix and Array have the functions as below.
+
+![Formula](/Users/apple/Desktop/Screen Shot 2021-06-27 at 00.50.40.png)
+
+A vector without a dim attribute is often thought as 1 dimension, but actually NULL dimension.
+We can also have matrix with one row or one column (row or column vector) with single dimension.
+We can reveal the difference in str() function
+```{r}
+str(c(1:3))
+str(matrix(1:3, ncol = 1))
+str(matrix(1:3, nrow = 1))
+str(array(1:3, 3))
+```
+
