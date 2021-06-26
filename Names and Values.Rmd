@@ -1,0 +1,22 @@
+---
+title: "Notebook for Names and Values"
+output: html_notebook
+---
+Given the following df, make the column 3 that is the sum of 1 and 2. Don't use [] and [[]]. Only use $
+```{r}
+df <- data.frame(runif(3), runif(3))
+names(df) <- c(1, 2)
+```
+
+Answer
+```{r}
+df$'3' <- df$`1` + df$`2`
+df
+```
+
+In the following code, how much memory does y occupy?
+```{r}
+x <- runif(1e6)
+y <- list(x, x, x)
+```
+22.9 Mb. according to environment.
