@@ -1,0 +1,69 @@
+---
+title: "Vectors"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+## Types of Vectors
+In this chapter, I would learn about the type of vectors. There are basically 4 types of vectors. That is logical (TRUE- FALSE), Integer (non decimal values, NaN and Inf, -Inf), Double (decimal values) and Character.
+
+Vector that is the same type of elements is Atomic Vector. Otherwise it is a list.
+```{r}
+lgl_var <- c(TRUE, FALSE)
+int_var <- c(1L, 6L, 10L)
+dbl_var <- c(1, 2.5, 4.5)
+chr_var <- c("these are", "some strings")
+```
+
+To get the type of the vector, we would use the function typeof()
+
+```{r}
+typeof(lgl_var)
+typeof(int_var)
+typeof(dbl_var)
+typeof(chr_var)
+```
+## Missing values
+Calculation with NA are mostly NA. Excepting some cases
+
+```{r}
+NA + 10
+NA *10
+NA < 10
+!NA
+```
+
+NA is something between TRUE and FALSE. Let's see it. When doing with TRUE and FALSE, | returns in TRUE & returns in FALSE. NA is in between.
+```{r}
+NA| TRUE
+NA & TRUE
+NA | FALSE
+NA & FALSE
+```
+```{r}
+NA ^ 0
+```
+Checking if NA equal NA or other numbers. Returns all in NA.
+
+```{r}
+x <- c(NA, 1, NA, 2)
+x == NA
+```
+
+## Testing and Coercion
+
+We can use the function is.*() to test the type of a vector. But it applies to is.logical(), is.integer(), is.double() and is.character()
+
+```{r}
+is.logical(lgl_var)
+is.integer(lgl_var)
+is.double(dbl_var)
+is.character(chr_var)
+```
+Check carefully if you use these tests below by reading their documentation:
+```{r}
+is.vector(lgl_var)
+is.numeric(chr_var)
+is.atomic(dbl_var)
+```
+
