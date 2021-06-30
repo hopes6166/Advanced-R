@@ -132,7 +132,7 @@ z
 ```
 Vector, Matrix and Array have the functions as below.
 
-![Formula](/Users/apple/Desktop/Screen Shot 2021-06-27 at 00.50.40.png)
+![Formula](/Users/apple/R studying/Advanced-R/Screen Shot 2021-06-28 at 01.39.32.png)
 
 A vector without a dim attribute is often thought as 1 dimension, but actually NULL dimension.
 We can also have matrix with one row or one column (row or column vector) with single dimension.
@@ -143,4 +143,103 @@ str(matrix(1:3, ncol = 1))
 str(matrix(1:3, nrow = 1))
 str(array(1:3, 3))
 ```
+
+Now I will view the source code of setNames and unname. I will use the function getAnywhere() to view that
+```{r}
+getAnywhere(setNames)
+```
+They simply use the function names() to set the name of the object
+
+```{r}
+getAnywhere(unname)
+```
+dim when applied to one dimensional vector will return NULL.
+nrow and ncol will applied for matrix.
+
+### What is the difference between these objects below?
+
+```{r}
+x1 <- array(1:5, c(1, 1, 5))
+x2 <- array(1:5, c(1, 5, 1))
+x3 <- array(1:5, c(5, 1, 1))
+```
+x1 is the array of 5.
+x2 is the array of 1 with the matrix 1 * 5
+x3 is the array of 1 with the matrix 5 * 1
+
+### Why we don't see the comment attribute of the object when we print?
+```{r}
+structure(1:5, comment = "my attribute")
+#> [1] 1 2 3 4 5
+```
+Usually dim and names are shown when printing out the attribute/ structure.
+
+## S3 atomic vectors
+
+### Factor
+Factor is under the integer vector but has 2 attributes: class is factor and levels.
+```{r}
+x <- factor(c("a", "b", "b", "a"))
+typeof(x)
+attributes(x)
+```
+Another example of factor. Factor would make us know about other levels even it is not appeared in the observations.
+```{r}
+sex_char <- c("m", "m", "m")
+sex_factor <- factor(sex_char, levels = c("m", "f"))
+
+table(sex_char)
+
+table(sex_factor)
+
+```
+Order is a small variation of of factors. It might have meaning such as low, medium and high.
+```{r}
+# Order
+grade <- ordered(c("b", "b", "c", "a"), levels = c("c", "b", "a"))
+grade
+```
+In base R, R automatically convert character vector to levels. However the author of the book suggest us if we know well about the data, we should use the parameter: stringAsFactor = FALSE and then convert them manually (in case the levels are not right or there are some unseen level in the data)
+### Dates
+Date is built on top of double vector. They have class Date and no other attribute.
+```{r}
+today <- Sys.Date()
+typeof(today)
+attributes(today)
+```
+### Datetimes
+2 type of datetime information POSIXct and POSIXlt: ct stands for calendar time and lt stands for local time.
+I will focus on the POSIXct
+```{r}
+now_ct <- as.POSIXct("2021-06-28 22:00", tz = "UTC")
+typeof(now_ct)
+attributes(now_ct)
+```
+
+### Difftime
+```{r}
+one_week_1 <- as.difftime(1, unit = "weeks")
+one_week_1
+```
+### Exercise
+#### 1. What sort of object the table return? What attributes does it have? How does the dimensionality change when you tabulate more variables?
+table() will return the count of the observations if it is the character variable, but if it is factor, it will count all the level of that factor. 
+#### 2. What happens to a factor if you revise its level?
+```{r}
+f1 <- factor(letters)
+levels(f1) <- rev(levels(f1))
+```
+
+This function reverses the level of the f1 object. 
+
+#### 3. What is the differences between f1, f2 and f3
+```{r}
+f2 <- rev(factor(letters))
+
+f3 <- factor(letters, levels = rev(letters))
+```
+f1 is from a-z but level from z-a
+f2 is from z-a but level from a-z
+f3 is from a-z but level form z-a
+
 
