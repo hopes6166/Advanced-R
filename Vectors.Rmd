@@ -242,4 +242,93 @@ f1 is from a-z but level from z-a
 f2 is from z-a but level from a-z
 f3 is from a-z but level form z-a
 
+## List
+List element are technically the same type and each element is a reference to another object, which can be any type. Because of referencing, the list size might be much smaller than we think it might be.
+```{r}
+library(lobstr)
+lobstr::obj_size(mtcars)
+l2 <- list(mtcars, mtcars, mtcars)
+obj_size(l2)
+
+```
+
+list can contain other list. like this
+```{r}
+l3 <- list(list(list(1)))
+```
+
+### Testing and coercion
+
+We can test the list by using is.list(). coerce using as.list() and see type by using typeof()
+```{r}
+typeof(l3)
+is.list(l3)
+as.list(1:3)
+```
+### Matrices and arrays
+list can be list matrix and list array by setting the attribute to them:
+```{r}
+l <- list(1:3, "a", TRUE, 1.0)
+dim(l) <- c(2, 2)
+l
+l[[1, 1]]
+#> [1] 1 2 3
+```
+Using unlist
+```{r}
+typeof(unlist(l))
+```
+Using as.vector()
+```{r}
+typeof(as.vector(l))
+```
+
+## Dataframe and tibbles
+
+Example of dataframe
+```{r}
+df1 <- data.frame(x = 1:3, y = letters[1:3])
+typeof(df1)
+attributes(df1)
+
+```
+As we can see, dataframe is a list. Actually, dataframe is a named list of vectors. The attributes are names and row.names, class is data.frame.
+length of dataframe is the number of of columns.
+
+Example of tibble
+```{r}
+library(tibble)
+df2 <- tibble(x = 1:3, y = letters[1:3])
+typeof(df2)
+attributes(df2)
+```
+```{r}
+df <- data.frame(
+  x = 1:3,
+  y = c("a", "b", "c")
+)
+
+str(df)
+```
+To convert str to factor, be aware to use StringAsFactors = FALSE
+```{r}
+df_str <- data.frame(x = 1:3, y = c("a", "b", "c"), stringsAsFactors = FALSE)
+str(df_str)
+```
+Tibble is lazy because they never coerce their input. Let see the identical example with function tibble
+```{r}
+df_str2 <- tibble(x = 1:3, y = c("a", "b", "c"))
+str(df_str2)
+```
+We can see that tibble do not convert them automatically str to factor.
+```{r}
+names(data.frame('1' = 1))
+names(tibble('1' = 1))
+```
+Tibbe as we see do not change the name of non-syntactic names unless we use check.names = FALSE, they don't change name surrounded by ''.
+Tibble allows you to refer to variable created during construction
+```{r}
+x <- tibble(x = 1:3, y = x*2)
+x
+```
 
