@@ -1,0 +1,99 @@
+---
+title: "Control Flow"
+output: html_notebook
+---
+
+We can control the flow with if, switch() (choice), for and while (loop)
+
+## IF
+
+If returns a value so we can assign value
+```{r}
+x1 <- if (TRUE) 1 else 2
+x2 <- if (FALSE) 2
+x1
+x2
+```
+Example for the value of if can assign value
+```{r}
+greet <- function(name, birthday = FALSE) {
+  paste0(
+    "Hi ", name, 
+    if (birthday) " and happy Bday")
+}
+
+greet("Minh", TRUE)
+```
+
+## SWITCH
+Switch can help to reduce the if function like this
+```{r}
+x_option <- function(x) {
+  if (x == "a") {
+    "option 1"
+  } else if (x == "b") {
+    "option 2" 
+  } else if (x == "c") {
+    "option 3"
+  } else {
+    stop("Invalid `x` value")
+  }
+}
+```
+with the more succinct:
+```{r}
+x_option_sw <- function(x) {
+  switch(x,
+         a = "option 1", 
+         b = "option 2",
+         c = "option 3", 
+         stop = ("Invalid `x` value"))
+}
+```
+
+```{r}
+x_option_sw("100")
+```
+
+Switch can be used with numeric but if x is not a whole number, undesirable output would happen. Therefore it is recommended that using switch to character input only.
+
+Exercise: what is the output?
+```{r}
+ifelse(TRUE, 1, "no")
+```
+the function ifelse has the description like this ifelse(test, yes, no). 
+
+Exercise: why the following code work?
+```{r}
+x <- 1:10
+y <- numeric()
+empty_check <- function(x) {if (length(x)) "Not empty" else "Empty"}
+empty_check(x)
+empty_check(y)
+```
+
+## LOOPS
+example of loops
+```{r}
+for (i in 1:3) {print(i)}
+```
+NOTE: for assign the item for that specific variable name, and overwrite all the previous name
+```{r}
+i <- 100
+for (i in 1:3) {}
+i
+```
+There are a few way to terminate loop early: next (exit the current iteration) or break (exit the entire for loop)
+
+example
+```{r}
+for (i in 1:10000) {
+  if (i <3) 
+    next
+  print(i)
+  
+  if (i>=6)
+    break
+}
+```
+
