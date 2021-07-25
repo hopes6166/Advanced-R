@@ -97,3 +97,13 @@ for (i in 1:10000) {
 }
 ```
 
+```{r}
+means <- c(1, 50, 20)
+out <- vector("list", length(means))
+for (i in 1:length(means)) {
+  out[[i]] <- rnorm(10, means[[i]])
+}
+```
+
+
+
